@@ -15,26 +15,129 @@ public class VistaPanelDueño extends javax.swing.JFrame {
     
     private modelo.ModeloTablaReservas modeloTabla; 
 
-    public VistaPanelDueño() {  
-        initComponents();     
-        configurarTabla();     
-    }                          
+   public VistaPanelDueño() {
+    initComponents();
+    configurarTabla();
+    estilizarBotones();
+    new Controlador.ControladorPanelDueño(this);
+} 
+   
     private void configurarTabla() {
-        modeloTabla = new modelo.ModeloTablaReservas();
-        jTable1.setModel(modeloTabla);        // ← CAMBIO: era tablaReservas
-        jTable1.setRowHeight(28);             // ← CAMBIO: era tablaReservas
-        jTable1.setSelectionMode(
-            javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jTable1.setShowGrid(true);
-        jTable1.setGridColor(new java.awt.Color(220, 220, 220));
-        jTable1.getTableHeader().setFont(
-            new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
-        jTable1.getTableHeader().setBackground(
-            new java.awt.Color(34, 139, 34));
-        jTable1.getTableHeader().setForeground(
-            java.awt.Color.WHITE);
-        jTable1.getTableHeader().setReorderingAllowed(false);
+    modeloTabla = new modelo.ModeloTablaReservas();
+    jTable1.setModel(modeloTabla);
+    jTable1.setRowHeight(30);
+    jTable1.setSelectionMode(
+        javax.swing.ListSelectionModel.SINGLE_SELECTION);
+    jTable1.setShowGrid(true);
+    jTable1.setGridColor(new java.awt.Color(200, 200, 200));
+    jTable1.setBackground(java.awt.Color.WHITE);
+    jTable1.setForeground(java.awt.Color.BLACK);
+    jTable1.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 13));
+    jTable1.setSelectionBackground(new java.awt.Color(34, 139, 34));
+    jTable1.setSelectionForeground(java.awt.Color.WHITE);
+
+    // Encabezado verde letras blancas grandes
+    jTable1.getTableHeader().setFont(
+        new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+    jTable1.getTableHeader().setBackground(
+        new java.awt.Color(34, 139, 34));
+    jTable1.getTableHeader().setForeground(java.awt.Color.WHITE);
+    jTable1.getTableHeader().setReorderingAllowed(false);
+
+    // Anchos
+    jTable1.getColumnModel().getColumn(0).setPreferredWidth(70);
+    jTable1.getColumnModel().getColumn(1).setPreferredWidth(180);
+    jTable1.getColumnModel().getColumn(2).setPreferredWidth(160);
+    jTable1.getColumnModel().getColumn(3).setPreferredWidth(100);
+    jTable1.getColumnModel().getColumn(4).setPreferredWidth(70);
+    jTable1.getColumnModel().getColumn(5).setPreferredWidth(90);
+
+    // Renderer letras negras alineado izquierda
+javax.swing.table.DefaultTableCellRenderer negroIzquierda =
+    new javax.swing.table.DefaultTableCellRenderer() {
+        @Override
+        public java.awt.Component getTableCellRendererComponent(
+            javax.swing.JTable table, Object value, boolean isSelected,
+            boolean hasFocus, int row, int column) {
+            super.getTableCellRendererComponent(
+                table, value, isSelected, hasFocus, row, column);
+            if (!isSelected) {
+                setForeground(java.awt.Color.BLACK);
+                // Filas alternas: verde clarito y blanco
+                if (row % 2 == 0) {
+                    setBackground(new java.awt.Color(220, 245, 220));
+                } else {
+                    setBackground(java.awt.Color.WHITE);
+                }
+            } else {
+                setForeground(java.awt.Color.WHITE);
+                setBackground(new java.awt.Color(34, 139, 34));
+            }
+            return this;
+        }
+    };
+
+javax.swing.table.DefaultTableCellRenderer negrocentrado =
+    new javax.swing.table.DefaultTableCellRenderer() {
+        @Override
+        public java.awt.Component getTableCellRendererComponent(
+            javax.swing.JTable table, Object value, boolean isSelected,
+            boolean hasFocus, int row, int column) {
+            super.getTableCellRendererComponent(
+                table, value, isSelected, hasFocus, row, column);
+            setHorizontalAlignment(javax.swing.JLabel.CENTER);
+            if (!isSelected) {
+                setForeground(java.awt.Color.BLACK);
+                if (row % 2 == 0) {
+                    setBackground(new java.awt.Color(220, 245, 220));
+                } else {
+                    setBackground(java.awt.Color.WHITE);
+                }
+            } else {
+                setForeground(java.awt.Color.WHITE);
+                setBackground(new java.awt.Color(34, 139, 34));
+            }
+            return this;
+        }
+    };
+
+    // Aplicar a cada columna
+    jTable1.getColumnModel().getColumn(0).setCellRenderer(negrocentrado);
+    jTable1.getColumnModel().getColumn(1).setCellRenderer(negroIzquierda);
+    jTable1.getColumnModel().getColumn(2).setCellRenderer(negroIzquierda);
+    jTable1.getColumnModel().getColumn(3).setCellRenderer(negrocentrado);
+    jTable1.getColumnModel().getColumn(4).setCellRenderer(negrocentrado);
+    jTable1.getColumnModel().getColumn(5).setCellRenderer(negrocentrado);
+}
+
+private void estilizarBotones() {
+    javax.swing.JButton[] botones = {
+        btnVerReservas, btnCancelarReserva,
+        btnActualizar, btnCerrarSesion
+    };
+
+    for (javax.swing.JButton btn : botones) {
+        btn.setBackground(new java.awt.Color(80, 80, 80));
+        btn.setForeground(java.awt.Color.WHITE);
+        btn.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+        btn.setFocusPainted(false);
+        btn.setBorderPainted(false);
+        btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }
+
+    // Arreglar fuentes del header
+    lblTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 20));
+    lblTitulo.setForeground(java.awt.Color.WHITE);
+    lblBienvenida.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 14));
+    lblBienvenida.setForeground(java.awt.Color.WHITE);
+    panelFooter.setBackground(new java.awt.Color(45, 45, 45));
+    lblEstado.setForeground(java.awt.Color.BLACK);
+    lblEstado.setFont(new java.awt.Font("Segoe UI", java.awt.Font.ITALIC, 12));
+    lblEstado.setText("  Reservas del Establecimiento");
+
+    // Cerrar sesion en rojo oscuro
+    btnCerrarSesion.setBackground(new java.awt.Color(160, 30, 30));
+}
 
 
     /**
@@ -111,10 +214,9 @@ public class VistaPanelDueño extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnVerReservas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnCancelarReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnCancelarReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelSidebarLayout.setVerticalGroup(
@@ -139,7 +241,7 @@ public class VistaPanelDueño extends javax.swing.JFrame {
         );
         panelFooterLayout.setVerticalGroup(
             panelFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 32, Short.MAX_VALUE)
+            .addGap(0, 48, Short.MAX_VALUE)
         );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -171,6 +273,7 @@ public class VistaPanelDueño extends javax.swing.JFrame {
                 .addGap(0, 36, Short.MAX_VALUE))
         );
 
+        lblEstado.setBackground(new java.awt.Color(0, 0, 0));
         lblEstado.setText("Reservas del Establecimiento");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -183,24 +286,26 @@ public class VistaPanelDueño extends javax.swing.JFrame {
                 .addComponent(panelSidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelCentro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(lblEstado))
-                    .addComponent(panelCentro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(panelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblEstado)
+                        .addGap(19, 19, 19)
+                        .addComponent(panelSidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelCentro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelSidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelCentro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(panelFooter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
