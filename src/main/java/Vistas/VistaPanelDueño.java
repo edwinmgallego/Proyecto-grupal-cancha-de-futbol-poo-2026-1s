@@ -262,6 +262,7 @@ public class VistaPanelDueño extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> 
             new VistaPanelDueño().setVisible(true));
+        
     }                        
 
 

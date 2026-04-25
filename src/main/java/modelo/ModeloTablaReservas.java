@@ -11,6 +11,7 @@ import java.util.List;
  * @author felip
  */
 
+
 public class ModeloTablaReservas extends AbstractTableModel {
 
     private final String[] columnas = {
