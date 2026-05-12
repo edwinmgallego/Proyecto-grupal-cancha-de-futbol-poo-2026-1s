@@ -28,7 +28,6 @@ public class ControladorHomeJugador implements ActionListener {
         // "Suscribimos" el controlador a los botones de la vista
         this.vista.getBtnBuscarCanchas().addActionListener(this);
         this.vista.getBtnReservar().addActionListener(this);
-        this.vista.getBtnMiPerfil().addActionListener(this);
     }
 
     public void iniciar() {
