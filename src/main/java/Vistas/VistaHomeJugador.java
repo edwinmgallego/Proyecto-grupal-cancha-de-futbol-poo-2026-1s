@@ -17,6 +17,7 @@ public class VistaHomeJugador extends JFrame {
     private JButton btnReservar;
     private DefaultListModel<String> modeloLista;
     private JList<String> listaCanchas;
+    private PanelDetallesCancha panelDetalles;
 
     public VistaHomeJugador() {
         configurarVentana();
@@ -41,9 +42,11 @@ public class VistaHomeJugador extends JFrame {
         
         modeloLista = new DefaultListModel<>();
         listaCanchas = new JList<>(modeloLista);
+        panelDetalles = new PanelDetallesCancha();
         
         add(panelSuperior, BorderLayout.NORTH);
         add(new JScrollPane(listaCanchas), BorderLayout.CENTER);
+        add(panelDetalles, BorderLayout.EAST);
     }
 
     // --- GETTERS PARA QUE EL CONTROLADOR ACCEDA A LA VISTA ---
